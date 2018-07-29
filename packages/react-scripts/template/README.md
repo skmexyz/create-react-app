@@ -895,13 +895,6 @@ To add Flow to a Create React App project, follow these steps:
 2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
 3. Run `npm run flow init` (or `yarn flow init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
 4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
-5. Edit `.babelrc` with the following content:
-
-```
-{
-  "presets": [["react-app", { "flow": true }]]
-}
-```
 
 Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
 You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/flow/) for a better integrated experience.
@@ -917,18 +910,9 @@ Recent versions of [TypeScript](https://www.typescriptlang.org/) work with Creat
 
 To add TypeScript to a Create React App project, follow these steps:
 
-1. Run `npm install --dev typescript @types/react @types/react-dom` (or `yarn add --dev typescript @types/react @types/react-dom`).
-2. Add `"type-check": "tsc"` to the `scripts` section of your `package.json`.
+1. Run `npm install --dev @types/react @types/react-dom` (or `yarn add --dev @types/react @types/react-dom`).
 2. Rename all `.js` files to `.tsx` if they have React components or `.ts` if not (e.g. `git mv src/index.js src/index.tsx`).
-4. Edit `.babelrc` with the following content:
-
-```
-{
-  "presets": [["react-app", { "typescript": true }]]
-}
-```
-
-5. Add a `tsconfig.json` file with this content:
+3. Create a `tsconfig.json` file with this content:
 
 ```json
 {
@@ -962,6 +946,31 @@ To add TypeScript to a Create React App project, follow these steps:
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   }
+}
+```
+
+4. [optional] Create a `tslint.json` file with the following content:
+
+```
+{
+  "defaultSeverity": "warning",
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**",
+      "build/**"
+    ]
+  },
+  "jsRules": {
+    "curly": true,
+    "no-console": false
+  },
+  "rules": {
+    "curly": true,
+    "no-console": false,
+    "member-access": false
+  },
+  "rulesDirectory": []
 }
 ```
 

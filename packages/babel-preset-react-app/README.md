@@ -34,7 +34,7 @@ This preset uses the `useBuiltIns` option with [transform-object-rest-spread](ht
 
 ## Usage with Flow
 
-To use this package with [`@babel/preset-flow`]https://www.npmjs.com/package/@babel/preset-flow), edit `.babelrc` to the following:
+To use this package with [`@babel/preset-flow`]https://www.npmjs.com/package/@babel/preset-flow), you only need to have a `.flowconfig` file at the root directory and it will be detected automatically. Alternatively, you can edit `.babelrc` with the following:
 
 ```
 {
@@ -42,9 +42,10 @@ To use this package with [`@babel/preset-flow`]https://www.npmjs.com/package/@ba
 }
 ```
 
+
 ## Usage with TypeScript
 
-To use this package with [`@babel/preset-typescript`]https://www.npmjs.com/package/@babel/preset-typescript), edit `.babelrc` to the following:
+To use this package with [`@babel/preset-typescript`]https://www.npmjs.com/package/@babel/preset-typescript), you only need to have a `tsconfig.json` file at the root directory and it will be detected automatically. Alternatively, you can edit `.babelrc` with the following:
 
 ```
 {

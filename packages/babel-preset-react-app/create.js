@@ -6,6 +6,15 @@
  */
 'use strict';
 
+const path = require('path');
+const fs = require('fs');
+
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+
+const hasFlowConfig = fs.existsSync(resolveApp('.flowconfig'));
+const hasTSConfig = fs.existsSync(resolveApp('tsconfig.json'));
+
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
     value = defaultValue;
@@ -26,11 +35,11 @@ module.exports = function(api, opts, env) {
   var isEnvDevelopment = env === 'development';
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
-  var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+  var isFlowEnabled = validateBoolOption('flow', opts.flow, hasFlowConfig);
   var isTypeScriptEnabled = validateBoolOption(
     'typescript',
     opts.typescript,
-    true
+    hasTSConfig
   );
 
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
@@ -40,6 +49,14 @@ module.exports = function(api, opts, env) {
         '"test", and "production". Instead, received: ' +
         JSON.stringify(env) +
         '.'
+    );
+  }
+
+  if (isFlowEnabled && isTypeScriptEnabled) {
+    throw new Error(
+      'Cannot enable both flow and typescript support in the same project. ' +
+        "Please make sure you don't have both .flowconfig and tsconfig.json files. '" +
+        'If using .babelrc, set one option to false and the other one to true.'
     );
   }
 
