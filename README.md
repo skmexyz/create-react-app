@@ -146,6 +146,7 @@ The [User Guide](https://github.com/facebook/create-react-app/blob/master/packag
 - [Using Global Variables](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#using-global-variables)
 - [Adding Bootstrap](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-bootstrap)
 - [Adding Flow](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-flow)
+- [Adding TypeScript](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-typescript)
 - [Adding a Router](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-router)
 - [Adding Custom Environment Variables](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)
 - [Can I Use Decorators?](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#can-i-use-decorators)
@@ -183,7 +184,7 @@ Please refer to the [User Guide](https://github.com/facebook/create-react-app/bl
 
 Your environment will have everything you need to build a modern single-page React app:
 
-* React, JSX, ES6, and Flow syntax support.
+* React, JSX, ES6, TypeScript and Flow syntax support.
 * Language extras beyond ES6 like the object spread operator.
 * Autoprefixed CSS, so you don’t need `-webkit-` or other prefixes.
 * A fast interactive unit test runner with built-in support for coverage reporting.
@@ -216,7 +217,7 @@ Here’s a few common cases where you might want to try something else:
 
 * If your website is **mostly static** (for example, a portfolio or a blog), consider using [Gatsby](https://www.gatsbyjs.org/) instead. Unlike Create React App, it pre-renders the website into HTML at the build time.
 
-* If you want to use **TypeScript**, consider using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript).
+* If you want to use **TypeScript** with `tsc` instead of `babel`, consider using [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript).
 
 * If you want to use **Parcel** instead of **Webpack** as your bundler, consider using [create-react-app-parcel](https://github.com/sw-yx/create-react-app-parcel).
 

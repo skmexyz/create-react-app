@@ -46,6 +46,24 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
+const isFlow = fs.existsSync(resolveApp('.flowconfig'));
+const isTypeScript = fs.existsSync(resolveApp('tsconfig.json'));
+
+const resolveTS = (
+  resolveFn,
+  baseFilePath,
+  extension = 'ts',
+  checkIfExists = true
+) => {
+  const jsFilePath = resolveFn(`${baseFilePath}.js`);
+  if (!isTypeScript) {
+    return jsFilePath;
+  }
+
+  const tsFilePath = resolveFn(`${baseFilePath}.${extension}`);
+  return !checkIfExists || fs.existsSync(tsFilePath) ? tsFilePath : jsFilePath;
+};
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -53,12 +71,12 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appIndexJs: resolveTS(resolveApp, 'src/index', 'tsx'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('src/setupTests.js'),
-  proxySetup: resolveApp('src/setupProxy.js'),
+  testsSetup: resolveTS(resolveApp, 'src/setupTests'),
+  proxySetup: resolveTS(resolveApp, 'src/setupProxy'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
@@ -74,12 +92,12 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appIndexJs: resolveTS(resolveApp, 'src/index', 'tsx'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('src/setupTests.js'),
-  proxySetup: resolveApp('src/setupProxy.js'),
+  testsSetup: resolveTS(resolveApp, 'src/setupTests'),
+  proxySetup: resolveTS(resolveApp, 'src/setupProxy'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
@@ -105,12 +123,12 @@ if (
     appBuild: resolveOwn('../../build'),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
-    appIndexJs: resolveOwn('template/src/index.js'),
+    appIndexJs: resolveTS(resolveOwn, 'template/src/index', 'tsx'),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
     yarnLockFile: resolveOwn('template/yarn.lock'),
-    testsSetup: resolveOwn('template/src/setupTests.js'),
-    proxySetup: resolveOwn('template/src/setupProxy.js'),
+    testsSetup: resolveTS(resolveOwn, 'template/src/setupTests'),
+    proxySetup: resolveTS(resolveOwn, 'template/src/setupProxy'),
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
@@ -120,3 +138,6 @@ if (
   };
 }
 // @remove-on-eject-end
+
+module.exports.isFlow = isFlow;
+module.exports.isTypeScript = isTypeScript;

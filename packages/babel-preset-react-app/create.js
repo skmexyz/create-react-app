@@ -7,6 +7,13 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
+
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+
+const hasFlowConfig = fs.existsSync(resolveApp('.flowconfig'));
+const hasTSConfig = fs.existsSync(resolveApp('tsconfig.json'));
 
 const validateBoolOption = (name, value, defaultValue) => {
   if (typeof value === 'undefined') {
@@ -29,7 +36,12 @@ module.exports = function(api, opts, env) {
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
 
-  var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+  var isFlowEnabled = validateBoolOption('flow', opts.flow, hasFlowConfig);
+  var isTypeScriptEnabled = validateBoolOption(
+    'typescript',
+    opts.typescript,
+    hasTSConfig
+  );
   var areHelpersEnabled = validateBoolOption('helpers', opts.helpers, true);
   var useAbsoluteRuntime = validateBoolOption(
     'absoluteRuntime',
@@ -51,6 +63,14 @@ module.exports = function(api, opts, env) {
         '"test", and "production". Instead, received: ' +
         JSON.stringify(env) +
         '.'
+    );
+  }
+
+  if (isFlowEnabled && isTypeScriptEnabled) {
+    throw new Error(
+      'Cannot enable both flow and typescript support in the same project. ' +
+        "Please make sure you don't have both .flowconfig and tsconfig.json files. '" +
+        'If using .babelrc, set one option to false and the other one to true.'
     );
   }
 
@@ -97,11 +117,15 @@ module.exports = function(api, opts, env) {
       ],
     ].filter(Boolean),
     plugins: [
-      // Strip flow types before any other transform, emulating the behavior
+      // Strip flow and typescript types before any other transform, emulating the behavior
       // order as-if the browser supported all of the succeeding features
       // https://github.com/facebook/create-react-app/pull/5182
       isFlowEnabled &&
         require('@babel/plugin-transform-flow-strip-types').default,
+      isTypeScriptEnabled && [
+        require('@babel/plugin-transform-typescript').default,
+        { isTSX: true },
+      ],
       // Experimental macros support. Will be documented after it's had some time
       // in the wild.
       require('babel-plugin-macros'),
