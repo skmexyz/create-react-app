@@ -36,6 +36,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Bootstrap](#adding-bootstrap)
   - [Using a Custom Theme](#using-a-custom-theme)
 - [Adding Flow](#adding-flow)
+- [Adding TypeScript](#adding-typescript)
 - [Adding a Router](#adding-a-router)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
@@ -344,7 +345,7 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
     // ...
   },
 + "lint-staged": {
-+   "src/**/*.{js,jsx,json,css}": [
++   "src/**/*.{js,jsx,ts,tsx,json,css}": [
 +     "prettier --single-quote --write",
 +     "git add"
 +   ]
@@ -352,7 +353,7 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
   "scripts": {
 ```
 
-Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx}"` to format your entire project for the first time.
+Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx,ts,tsx}"` to format your entire project for the first time.
 
 Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://prettier.io/docs/en/editors.html) on the Prettier GitHub page.
 
@@ -894,12 +895,80 @@ To add Flow to a Create React App project, follow these steps:
 2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
 3. Run `npm run flow init` (or `yarn flow init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
 4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
+5. Edit `.babelrc` with the following content:
+
+```
+{
+  "presets": [["react-app", { "flow": true }]]
+}
+```
 
 Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
 You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/flow/) for a better integrated experience.
 In the future we plan to integrate it into Create React App even more closely.
 
 To learn more about Flow, check out [its documentation](https://flowtype.org/).
+
+## Adding TypeScript
+
+TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
+
+Recent versions of [TypeScript](https://www.typescriptlang.org/) work with Create React App projects out of the box thanks to Babel 7. Beware that Babel 7 TypeScript does not allow some features of TypeScript such as constant enum and namespaces.
+
+To add TypeScript to a Create React App project, follow these steps:
+
+1. Run `npm install --dev typescript @types/react @types/react-dom` (or `yarn add --dev typescript @types/react @types/react-dom`).
+2. Add `"type-check": "tsc"` to the `scripts` section of your `package.json`.
+2. Rename all `.js` files to `.tsx` if they have React components or `.ts` if not (e.g. `git mv src/index.js src/index.tsx`).
+4. Edit `.babelrc` with the following content:
+
+```
+{
+  "presets": [["react-app", { "typescript": true }]]
+}
+```
+
+5. Add a `tsconfig.json` file with this content:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ESNEXT",
+    "module": "ESNext",
+    "lib": ["es2017", "dom"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "sourceMap": true,
+    "noEmit": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "*": [
+        "*.web",
+        "*"
+      ]
+    },
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
+```
+
+Now you can run `npm run type-check` (or `yarn type-check`) to check the files for type errors.
+We recommend using [VSCode](https://code.visualstudio.com/) for a better integrated experience.
+
+To learn more about TypeScript, check out [its documentation](https://www.typescriptlang.org/).
 
 ## Adding a Router
 
@@ -1579,7 +1648,7 @@ Example package.json:
   "name": "your-package",
   "jest": {
     "collectCoverageFrom" : [
-      "src/**/*.{js,jsx}",
+      "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/",
       "!<rootDir>/path/to/dir/"
     ],

@@ -47,6 +47,9 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
+const isFlow = fs.existsSync(resolveApp('.flowconfig'));
+const isTypeScript = fs.existsSync(resolveApp('tsconfig.json'));
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -54,10 +57,12 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appIndexJs: resolveApp(isTypeScript ? 'src/index.tsx' : 'src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
-  testsSetup: resolveApp('src/setupTests.js'),
+  testsSetup: resolveApp(
+    isTypeScript ? 'src/setupTests.ts' : 'src/setupTests.js'
+  ),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
@@ -75,10 +80,12 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appIndexJs: resolveApp(isTypeScript ? 'src/index.tsx' : 'src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
-  testsSetup: resolveApp('src/setupTests.js'),
+  testsSetup: resolveApp(
+    isTypeScript ? 'src/setupTests.ts' : 'src/setupTests.js'
+  ),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
@@ -100,10 +107,14 @@ if (useTemplate) {
     appBuild: resolveOwn('../../build'),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
-    appIndexJs: resolveOwn('template/src/index.js'),
+    appIndexJs: resolveOwn(
+      isTypeScript ? 'template/src/index.tsx' : 'template/src/index.js'
+    ),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
-    testsSetup: resolveOwn('template/src/setupTests.js'),
+    testsSetup: resolveOwn(
+      isTypeScript ? 'template/src/setupTests.ts' : 'template/src/setupTests.js'
+    ),
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
@@ -115,6 +126,10 @@ if (useTemplate) {
 // @remove-on-eject-end
 
 module.exports.srcPaths = [module.exports.appSrc];
+
+module.exports.isFlow = isFlow;
+
+module.exports.isTypeScript = isTypeScript;
 
 module.exports.useYarn = fs.existsSync(
   path.join(module.exports.appPath, 'yarn.lock')

@@ -181,7 +181,18 @@ module.exports = {
     // https://github.com/facebook/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: [
+      '.web.js',
+      '.mjs',
+      '.js',
+      '.json',
+      '.web.jsx',
+      '.jsx',
+      '.web.ts',
+      '.web.tsx',
+      '.ts',
+      '.tsx',
+    ],
     alias: {
       // @remove-on-eject-begin
       // Resolve Babel runtime relative to react-scripts.
@@ -253,9 +264,9 @@ module.exports = {
             },
           },
           // Process application JS with Babel.
-          // The preset includes JSX, Flow, and some ESnext features.
+          // The preset includes JSX, Flow, TypeScript and some ESnext features.
           {
-            test: /\.(js|jsx|mjs)$/,
+            test: /\.(js|jsx|mjs|tsx?)$/,
             include: paths.srcPaths,
             exclude: [/[/\\\\]node_modules[/\\\\]/],
             use: [
@@ -290,7 +301,7 @@ module.exports = {
           // Process any JS outside of the app with Babel.
           // Unlike the application JS, we only compile the standard ES features.
           {
-            test: /\.js$/,
+            test: /\.(js)|(tsx?)$/,
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
@@ -378,7 +389,7 @@ module.exports = {
             // it's runtime that would otherwise be processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|jsx|mjs|tsx?)$/, /\.html$/, /\.json$/],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },

@@ -27,6 +27,11 @@ module.exports = function(api, opts, env) {
   var isEnvProduction = env === 'production';
   var isEnvTest = env === 'test';
   var isFlowEnabled = validateBoolOption('flow', opts.flow, true);
+  var isTypeScriptEnabled = validateBoolOption(
+    'typescript',
+    opts.typescript,
+    true
+  );
 
   if (!isEnvDevelopment && !isEnvProduction && !isEnvTest) {
     throw new Error(
@@ -75,6 +80,7 @@ module.exports = function(api, opts, env) {
         },
       ],
       isFlowEnabled && [require('@babel/preset-flow').default],
+      isTypeScriptEnabled && [require('@babel/preset-typescript').default],
     ].filter(Boolean),
     plugins: [
       // Experimental macros support. Will be documented after it's had some time
