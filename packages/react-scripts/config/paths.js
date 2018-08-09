@@ -47,9 +47,13 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
-const isFlow = fs.existsSync(resolveApp('.flowconfig'));
-const isTypeScript = fs.existsSync(resolveApp('tsconfig.json'));
-const useTSLint = isTypeScript && fs.existsSync(resolveApp('tslint.json'));
+const hasTSConfig = fs.existsSync(resolveApp('tsconfig.json'));
+const hasTSConfigProd = fs.existsSync(resolveApp('tsconfig.prod.json'));
+
+const hasTSLint = fs.existsSync(resolveApp('tslint.json'));
+const hasTSLintProd = fs.existsSync(resolveApp('tslint.prod.json'));
+
+const isTypeScript = hasTSConfig;
 
 // config after eject: we're in ./config/
 module.exports = {
@@ -58,13 +62,19 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp(isTypeScript ? 'src/index.tsx' : 'src/index.js'),
+  appIndexJs: isTypeScript
+    ? resolveApp('src/index.tsx')
+    : resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
-  testsSetup: resolveApp(
-    isTypeScript ? 'src/setupTests.ts' : 'src/setupTests.js'
-  ),
+  testsSetup: isTypeScript
+    ? resolveApp('src/setupTests.ts')
+    : resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
+  appTSConfig: resolveApp('tsconfig.json'),
+  appTSConfigProd: resolveApp('tsconfig.prod.json'),
+  appTSLint: resolveApp('tslint.json'),
+  appTSLintProd: resolveApp('tslint.prod.json'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
 };
@@ -81,13 +91,19 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp(isTypeScript ? 'src/index.tsx' : 'src/index.js'),
+  appIndexJs: isTypeScript
+    ? resolveApp('src/index.tsx')
+    : resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
-  testsSetup: resolveApp(
-    isTypeScript ? 'src/setupTests.ts' : 'src/setupTests.js'
-  ),
+  testsSetup: isTypeScript
+    ? resolveApp('src/setupTests.ts')
+    : resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
+  appTSConfig: resolveApp('tsconfig.json'),
+  appTSConfigProd: resolveApp('tsconfig.prod.json'),
+  appTSLint: resolveApp('tslint.json'),
+  appTSLintProd: resolveApp('tslint.prod.json'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
   // These properties only exist before ejecting:
@@ -108,15 +124,19 @@ if (useTemplate) {
     appBuild: resolveOwn('../../build'),
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
-    appIndexJs: resolveOwn(
-      isTypeScript ? 'template/src/index.tsx' : 'template/src/index.js'
-    ),
+    appIndexJs: isTypeScript
+      ? resolveOwn('template/src/index.tsx')
+      : resolveOwn('template/src/index.js'),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
-    testsSetup: resolveOwn(
-      isTypeScript ? 'template/src/setupTests.ts' : 'template/src/setupTests.js'
-    ),
+    testsSetup: isTypeScript
+      ? resolveOwn('template/src/setupTests.ts')
+      : resolveOwn('template/src/setupTests.js'),
     appNodeModules: resolveOwn('node_modules'),
+    appTSConfig: resolveOwn('template/tsconfig.json'),
+    appTSConfigProd: resolveOwn('template/tsconfig.prod.json'),
+    appTSLint: resolveOwn('template/tslint.json'),
+    appTSLintProd: resolveOwn('template/tslint.prod.json'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
     // These properties only exist before ejecting:
@@ -128,11 +148,11 @@ if (useTemplate) {
 
 module.exports.srcPaths = [module.exports.appSrc];
 
-module.exports.isFlow = isFlow;
-
 module.exports.isTypeScript = isTypeScript;
+module.exports.useTSConfigProd = isTypeScript && hasTSConfigProd;
 
-module.exports.useTSLint = useTSLint;
+module.exports.useTSLint = isTypeScript && hasTSLint;
+module.exports.useTSLintProd = isTypeScript && hasTSLintProd;
 
 module.exports.useYarn = fs.existsSync(
   path.join(module.exports.appPath, 'yarn.lock')

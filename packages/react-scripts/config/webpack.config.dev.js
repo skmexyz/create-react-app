@@ -410,8 +410,9 @@ module.exports = {
     paths.isTypeScript &&
       new ForkTsCheckerWebpackPlugin({
         async: false,
+        tsconfig: paths.appTSConfig,
+        tslint: paths.useTSLint ? paths.appTSLint : undefined,
         watch: paths.appSrc,
-        tslint: paths.useTSLint,
       }),
   ].filter(Boolean),
 

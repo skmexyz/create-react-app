@@ -482,8 +482,15 @@ module.exports = {
     paths.isTypeScript &&
       new ForkTsCheckerWebpackPlugin({
         async: false,
+        tsconfig: paths.useTSConfigProd
+          ? paths.appTSConfigProd
+          : paths.appTSConfig,
+        tslint: paths.useTSLintProd
+          ? paths.appTSLintProd
+          : paths.useTSLint
+            ? paths.appTSLint
+            : undefined,
         watch: paths.appSrc,
-        tslint: paths.useTSLint,
       }),
   ].filter(Boolean),
   // Some libraries import Node modules but don't use them in the browser.

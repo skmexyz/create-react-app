@@ -949,6 +949,8 @@ To add TypeScript to a Create React App project, follow these steps:
 }
 ```
 
+_Note: `tsconfig.prod.json` is also supported._
+
 4. [optional] Setup TSLint
 
     1. Create a `tslint.json` file with the following content:
@@ -975,6 +977,8 @@ To add TypeScript to a Create React App project, follow these steps:
       "rulesDirectory": []
     }
     ```
+
+    _Note: `tslint.prod.json` is also supported._
 
     2. Run `npm install --dev tslint-react tslint-config-prettier` (or `yarn add --dev tslint-react tslint-config-prettier`).
 
