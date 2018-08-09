@@ -949,32 +949,37 @@ To add TypeScript to a Create React App project, follow these steps:
 }
 ```
 
-4. [optional] Create a `tslint.json` file with the following content:
+4. [optional] Setup TSLint
 
-```
-{
-  "defaultSeverity": "warning",
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
-  "linterOptions": {
-    "exclude": [
-      "node_modules/**",
-      "build/**"
-    ]
-  },
-  "jsRules": {
-    "curly": true,
-    "no-console": false
-  },
-  "rules": {
-    "curly": true,
-    "no-console": false,
-    "member-access": false
-  },
-  "rulesDirectory": []
-}
-```
+    1. Create a `tslint.json` file with the following content:
 
-Now you can run `npm run type-check` (or `yarn type-check`) to check the files for type errors.
+    ```
+    {
+      "defaultSeverity": "warning",
+      "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+      "linterOptions": {
+        "exclude": [
+          "node_modules/**",
+          "build/**"
+        ]
+      },
+      "jsRules": {
+        "curly": true,
+        "no-console": false
+      },
+      "rules": {
+        "curly": true,
+        "no-console": false,
+        "member-access": false
+      },
+      "rulesDirectory": []
+    }
+    ```
+
+    2. Run `npm install --dev tslint-react tslint-config-prettier` (or `yarn add --dev tslint-react tslint-config-prettier`).
+
+Type errors will show up in the console.
+
 We recommend using [VSCode](https://code.visualstudio.com/) for a better integrated experience.
 
 To learn more about TypeScript, check out [its documentation](https://www.typescriptlang.org/).

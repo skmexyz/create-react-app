@@ -90,7 +90,11 @@ checkBrowsers(paths.appPath)
         );
         console.log(
           'To ignore, add ' +
-            chalk.cyan('// eslint-disable-next-line') +
+            chalk.cyan(
+              paths.isTypeScript
+                ? '// tslint:disable-next-line'
+                : '// eslint-disable-next-line'
+            ) +
             ' to the line before.\n'
         );
       } else {

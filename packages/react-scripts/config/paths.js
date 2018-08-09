@@ -49,6 +49,7 @@ function getServedPath(appPackageJson) {
 
 const isFlow = fs.existsSync(resolveApp('.flowconfig'));
 const isTypeScript = fs.existsSync(resolveApp('tsconfig.json'));
+const useTSLint = isTypeScript && fs.existsSync(resolveApp('tslint.json'));
 
 // config after eject: we're in ./config/
 module.exports = {
@@ -130,6 +131,8 @@ module.exports.srcPaths = [module.exports.appSrc];
 module.exports.isFlow = isFlow;
 
 module.exports.isTypeScript = isTypeScript;
+
+module.exports.useTSLint = useTSLint;
 
 module.exports.useYarn = fs.existsSync(
   path.join(module.exports.appPath, 'yarn.lock')

@@ -66,6 +66,7 @@
     "svgr": "1.9.2",
     "sw-precache-webpack-plugin": "0.11.5",
     "thread-loader": "1.1.5",
+    "tslint": "^5",
     "typescript": "^3",
     "uglifyjs-webpack-plugin": "1.2.5",
     "url-loader": "1.0.1",

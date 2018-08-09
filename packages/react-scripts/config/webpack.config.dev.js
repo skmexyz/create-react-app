@@ -187,7 +187,7 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      {
+      !paths.isTypeScript && {
         test: /\.(js|jsx|mjs)$/,
         enforce: 'pre',
         use: [
@@ -366,7 +366,7 @@ module.exports = {
       },
       // ** STOP ** Are you adding a new loader?
       // Make sure to add the new loader(s) before the "file" loader.
-    ],
+    ].filter(Boolean),
   },
   plugins: [
     // Generates an `index.html` file with the <script> injected.
@@ -411,6 +411,7 @@ module.exports = {
       new ForkTsCheckerWebpackPlugin({
         async: false,
         watch: paths.appSrc,
+        tslint: paths.useTSLint,
       }),
   ].filter(Boolean),
 

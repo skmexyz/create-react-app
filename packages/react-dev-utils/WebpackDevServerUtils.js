@@ -177,7 +177,7 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
       console.log(chalk.yellow('Compiled with warnings.\n'));
       console.log(messages.warnings.join('\n\n'));
 
-      // Teach some ESLint tricks.
+      // Teach some ESLint / TSLint tricks.
       console.log(
         '\nSearch for the ' +
           chalk.underline(chalk.yellow('keywords')) +
@@ -186,6 +186,9 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
       console.log(
         'To ignore, add ' +
           chalk.cyan('// eslint-disable-next-line') +
+          ' (or ' +
+          chalk.cyan('// tslint:disable-next-line') +
+          ' if TypeScript)' +
           ' to the line before.\n'
       );
     }
