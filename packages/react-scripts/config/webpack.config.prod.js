@@ -11,6 +11,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -526,7 +527,17 @@ module.exports = {
         new RegExp('/[^/]+\\.[^/]+$'),
       ],
     }),
-  ],
+    // TypeScript type checking
+    paths.isTypeScript &&
+      new ForkTsCheckerWebpackPlugin({
+        async: false,
+        checkSyntacticErrors: true,
+        tsconfig: paths.hasTSConfigProd
+          ? paths.appTSConfigProd
+          : paths.appTSConfig,
+        watch: paths.appSrc,
+      }),
+  ].filter(Boolean),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {

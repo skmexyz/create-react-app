@@ -860,10 +860,9 @@ Recent versions of [TypeScript](https://www.typescriptlang.org/) work with Creat
 To add TypeScript to a Create React App project, follow these steps:
 
 1. Run `npm install --dev typescript @types/react @types/react-dom @types/jest` (or `yarn add --dev typescript @types/react @types/react-dom @types/jest`).
-2. Add `"tsc": "tsc"` to the `scripts` section of your `package.json`.
-3. Rename the `.js` files you want to convert. Use `.tsx` if they have React components or `.ts` if not (e.g. `git mv src/index.js src/index.tsx`).
+2. Rename the `.js` files you want to convert. Use `.tsx` if they use JSX or `.ts` if not (e.g. `git mv src/index.js src/index.tsx`).
 
-4. Create a `tsconfig.json` file at the root directory with the following content:
+3. Create a `tsconfig.json` file at the root directory with the following content:
 
 ```json
 {
@@ -886,9 +885,10 @@ To add TypeScript to a Create React App project, follow these steps:
 }
 ```
 
-5. To start type checking, open a new terminal tab and run `npm run tsc -- -w` (or `yarn tsc -w`)
+Type errors will show up in the console.
 
-Now you can run `npm run type-check` (or `yarn type-check`) to check the files for type errors.
+_Note: `tsconfig.prod.json` is also supported._
+
 We recommend using [VSCode](https://code.visualstudio.com/) for a better integrated experience.
 
 To learn more about TypeScript, check out [its documentation](https://www.typescriptlang.org/).
