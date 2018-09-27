@@ -889,6 +889,36 @@ Type errors will show up in the console.
 
 _Note: `tsconfig.prod.json` is also supported._
 
+4. [optional] Setup TSLint
+
+You don't need to setup TSLint because ESLint also supports TypeScript and is already pre-configured. But if you want, you can:
+
+    1. Run `npm install --dev tslint tslint-react tslint-config-prettier` (or `yarn add --dev tslint tslint-react tslint-config-prettier`).
+    2. Create a `tslint.json` file at the root directory with the following content:
+     ```
+    {
+      "defaultSeverity": "warning",
+      "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+      "linterOptions": {
+        "exclude": ["node_modules/**", "build/**"]
+      },
+      "jsRules": {
+        "curly": true,
+        "no-console": false
+      },
+      "rules": {
+        "curly": true,
+        "interface-name": false,
+        "member-access": false,
+        "no-console": false,
+        "ordered-imports": false
+      },
+      "rulesDirectory": []
+    }
+    ```
+
+_Note: `tslint.prod.json` is also supported._
+
 We recommend using [VSCode](https://code.visualstudio.com/) for a better integrated experience.
 
 To learn more about TypeScript, check out [its documentation](https://www.typescriptlang.org/).

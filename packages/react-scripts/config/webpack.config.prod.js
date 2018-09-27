@@ -255,7 +255,7 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      {
+      !paths.useTSLint && {
         test: /\.(js|mjs|jsx|tsx?)$/,
         enforce: 'pre',
         use: [
@@ -456,7 +456,7 @@ module.exports = {
           // Make sure to add the new loader(s) before the "file" loader.
         ],
       },
-    ],
+    ].filter(Boolean),
   },
   plugins: [
     // Generates an `index.html` file with the <script> injected.
@@ -535,6 +535,11 @@ module.exports = {
         tsconfig: paths.hasTSConfigProd
           ? paths.appTSConfigProd
           : paths.appTSConfig,
+        tslint: paths.useTSLint
+          ? paths.hasTSLintProd
+            ? paths.appTSLintProd
+            : paths.appTSLint
+          : undefined,
         watch: paths.appSrc,
       }),
   ].filter(Boolean),

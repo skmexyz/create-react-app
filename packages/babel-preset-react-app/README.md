@@ -51,3 +51,5 @@ To use this package with [`@babel/plugin-transform-typescript`]https://www.npmjs
   "presets": [["react-app", { "typescript": true }]]
 }
 ```
+
+TSLint is also automatically supported, you only need to create a `tslint.json` (and optionally a `tslint.prod.json`) file at the root directory.

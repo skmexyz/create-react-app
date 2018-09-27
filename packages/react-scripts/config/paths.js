@@ -49,6 +49,8 @@ function getServedPath(appPackageJson) {
 const isFlow = fs.existsSync(resolveApp('.flowconfig'));
 const isTypeScript = fs.existsSync(resolveApp('tsconfig.json'));
 const hasTSConfigProd = fs.existsSync(resolveApp('tsconfig.prod.json'));
+const useTSLint = fs.existsSync(resolveApp('tslint.json'));
+const hasTSLintProd = fs.existsSync(resolveApp('tslint.prod.json'));
 
 const resolveTS = (
   resolveFn,
@@ -77,6 +79,8 @@ module.exports = {
   appSrc: resolveApp('src'),
   appTSConfig: resolveApp('tsconfig.json'),
   appTSConfigProd: resolveApp('tsconfig.prod.json'),
+  appTSLint: resolveApp('tslint.json'),
+  appTSLintProd: resolveApp('tslint.prod.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveTS(resolveApp, 'src/setupTests'),
   proxySetup: resolveTS(resolveApp, 'src/setupProxy'),
@@ -100,6 +104,8 @@ module.exports = {
   appSrc: resolveApp('src'),
   appTSConfig: resolveApp('tsconfig.json'),
   appTSConfigProd: resolveApp('tsconfig.prod.json'),
+  appTSLint: resolveApp('tslint.json'),
+  appTSLintProd: resolveApp('tslint.prod.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveTS(resolveApp, 'src/setupTests'),
   proxySetup: resolveTS(resolveApp, 'src/setupProxy'),
@@ -133,6 +139,8 @@ if (
     appSrc: resolveOwn('template/src'),
     appTSConfig: resolveOwn('template/tsconfig.json'),
     appTSConfigProd: resolveOwn('template/tsconfig.prod.json'),
+    appTSLint: resolveOwn('template/tslint.json'),
+    appTSLintProd: resolveOwn('template/tslint.prod.json'),
     yarnLockFile: resolveOwn('template/yarn.lock'),
     testsSetup: resolveTS(resolveOwn, 'template/src/setupTests'),
     proxySetup: resolveTS(resolveOwn, 'template/src/setupProxy'),
@@ -149,3 +157,5 @@ if (
 module.exports.isFlow = isFlow;
 module.exports.isTypeScript = isTypeScript;
 module.exports.hasTSConfigProd = hasTSConfigProd;
+module.exports.useTSLint = useTSLint;
+module.exports.hasTSLintProd = hasTSLintProd;

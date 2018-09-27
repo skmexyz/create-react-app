@@ -189,7 +189,7 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      {
+      !paths.useTSLint && {
         test: /\.(js|mjs|jsx|tsx?)$/,
         enforce: 'pre',
         use: [
@@ -373,7 +373,7 @@ module.exports = {
       },
       // ** STOP ** Are you adding a new loader?
       // Make sure to add the new loader(s) before the "file" loader.
-    ],
+    ].filter(Boolean),
   },
   plugins: [
     // Generates an `index.html` file with the <script> injected.
@@ -422,6 +422,7 @@ module.exports = {
         async: false,
         checkSyntacticErrors: true,
         tsconfig: paths.appTSConfig,
+        tslint: paths.useTSLint ? paths.appTSLint : undefined,
         watch: paths.appSrc,
       }),
   ].filter(Boolean),
