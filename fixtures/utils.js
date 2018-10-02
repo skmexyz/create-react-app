@@ -14,7 +14,7 @@ async function bootstrap({ directory, template }) {
   );
   // optional files to copy
   await Promise.all(
-    ['.flowconfig'].map(async file => {
+    ['.flowconfig', 'tsconfig.json'].map(async file => {
       const exists = await fs.pathExists(path.join(template, file));
       if (!exists) return;
 
