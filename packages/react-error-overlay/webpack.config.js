@@ -24,7 +24,7 @@ module.exports = {
         use: 'raw-loader',
       },
       {
-        test: /\.(js)|(tsx?)$/,
+        test: /\.js$/,
         include: path.resolve(__dirname, './src'),
         use: 'babel-loader',
       },

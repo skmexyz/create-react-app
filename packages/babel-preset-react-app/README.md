@@ -34,7 +34,7 @@ This preset uses the `useBuiltIns` option with [transform-object-rest-spread](ht
 
 ## Usage with Flow
 
-To use this package with [`@babel/plugin-transform-flow-strip-types`]https://www.npmjs.com/package/@babel/plugin-transform-flow-strip-types), you only need to have a `.flowconfig` file at the root directory and it will be detected automatically. Alternatively, you can edit `.babelrc` with the following:
+To use this package with [`@babel/plugin-transform-flow-strip-types`](https://www.npmjs.com/package/@babel/plugin-transform-flow-strip-types), you only need to have a `.flowconfig` file at the root directory and it will be detected automatically. Alternatively, you can edit `.babelrc` with the following:
 
 ```
 {

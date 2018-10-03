@@ -23,7 +23,7 @@ module.exports = {
         oneOf: [
           // Source
           {
-            test: /\.(js)|(tsx?)$/,
+            test: /\.js$/,
             include: [path.resolve(__dirname, './src')],
             use: {
               loader: 'babel-loader',
@@ -31,7 +31,7 @@ module.exports = {
           },
           // Dependencies
           {
-            test: /\.(js)|(tsx?)$/,
+            test: /\.js$/,
             exclude: /@babel(?:\/|\\{1,2})runtime/,
             use: {
               loader: 'babel-loader',

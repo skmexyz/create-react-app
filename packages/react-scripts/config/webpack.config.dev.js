@@ -149,12 +149,9 @@ module.exports = {
       '.mjs',
       '.web.js',
       '.js',
-      '.json',
-      '.web.jsx',
-      '.jsx',
-      '.web.ts',
       '.ts',
-      '.web.tsx',
+      '.json',
+      '.jsx',
       '.tsx',
     ],
     alias: {
@@ -189,7 +186,7 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      !paths.useTSLint && {
+      {
         test: /\.(js|mjs|jsx|tsx?)$/,
         enforce: 'pre',
         use: [
@@ -422,7 +419,6 @@ module.exports = {
         async: false,
         checkSyntacticErrors: true,
         tsconfig: paths.appTSConfig,
-        tslint: paths.useTSLint ? paths.appTSLint : undefined,
         watch: paths.appSrc,
       }),
   ].filter(Boolean),

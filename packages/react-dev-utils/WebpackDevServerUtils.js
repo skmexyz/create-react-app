@@ -187,14 +187,7 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
           chalk.underline(chalk.yellow('keywords')) +
           ' to learn more about each warning.'
       );
-      console.log(
-        'To ignore, add ' +
-          chalk.cyan('// eslint-disable-next-line') +
-          ' (or ' +
-          chalk.cyan('// tslint:disable-next-line') +
-          ' if using TSLint)' +
-          ' to the line before.\n'
-      );
+      console.log('To ignore, add ' + chalk.cyan('// eslint-disable-next-line'));
     }
   });
   return compiler;
