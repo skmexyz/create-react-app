@@ -418,7 +418,7 @@ module.exports = {
       new ForkTsCheckerWebpackPlugin({
         async: false,
         checkSyntacticErrors: true,
-        tsconfig: paths.appTSConfig,
+        tsconfig: paths.appTsConfig,
         watch: paths.appSrc,
       }),
   ].filter(Boolean),

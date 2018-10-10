@@ -533,8 +533,8 @@ module.exports = {
         async: false,
         checkSyntacticErrors: true,
         tsconfig: paths.hasTSConfigProd
-          ? paths.appTSConfigProd
-          : paths.appTSConfig,
+          ? paths.appTsConfigProd
+          : paths.appTsConfig,
         tslint: paths.useTSLint
           ? paths.hasTSLintProd
             ? paths.appTSLintProd
