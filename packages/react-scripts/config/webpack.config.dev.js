@@ -14,7 +14,6 @@ const webpack = require('webpack');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
@@ -410,12 +409,26 @@ module.exports = {
     }),
     // TypeScript type checking
     fs.existsSync(paths.appTSConfig) &&
-      new ForkTsCheckerWebpackPlugin({
-        async: false,
-        checkSyntacticErrors: true,
-        tsconfig: paths.appTSConfig,
-        watch: paths.appSrc,
-      }),
+      (() => {
+        let ForkTsCheckerWebpackPlugin;
+        try {
+          ForkTsCheckerWebpackPlugin = require(`${
+            paths.appNodeModules
+          }/fork-ts-checker-webpack-plugin`);
+        } catch (e) {
+          // Fail silently.
+          // Type checking using this plugin is optional.
+          // The user may decide to install `fork-ts-checker-webpack-plugin` or use `tsc -w`.
+          return null;
+        }
+
+        return new ForkTsCheckerWebpackPlugin({
+          async: false,
+          checkSyntacticErrors: true,
+          tsconfig: paths.appTSConfig,
+          watch: paths.appSrc,
+        });
+      })(),
   ].filter(Boolean),
 
   // Some libraries import Node modules but don't use them in the browser.

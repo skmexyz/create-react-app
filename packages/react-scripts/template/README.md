@@ -887,7 +887,15 @@ To add TypeScript to a Create React App project, follow these steps:
 
 4. Copy [loaders.d.ts](./loaders.d.ts) from the template to your root directory if you don't have it.
 
-Type errors will show up in the console.
+5. To enable type checking, pick one of the two methods below:
+
+    ### Using `fork-ts-checker-webpack-plugin`
+
+    Run `npm install typescript fork-ts-checker-webpack-plugin` (or `yarn add typescript fork-ts-checker-webpack-plugin`). Type errors will show up in the same console as the build one.
+
+    ### Using `tsc -w`
+
+    Run `npm install typescript` (or `yarn add typescript`). Open a new terminal tab and run `npx tsc -w`. Type errors will show up in this separated tab.
 
 We recommend using [VSCode](https://code.visualstudio.com/) for a better integrated experience.
 
